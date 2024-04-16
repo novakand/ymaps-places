@@ -74,7 +74,7 @@ function addFilter(data) {
 
 function getFilterFunction(categories) {
     return function (obj) {
-        var content = obj.properties.Filter;
+        var content = obj.properties['FilterCategory'];
         return categories[content]
     }
 }
@@ -114,7 +114,7 @@ function getSheets() {
 function setFilter(data) {
     return new Promise((resolve, reject) => {
         const filter = data?.allRows
-            .reduce((result, feature) => { return { ...result, [feature.Filter]: isVisibleFeature, } }, {});
+            .reduce((result, feature) => { return { ...result, [feature['FilterCategory']]: isVisibleFeature, } }, {});
         resolve(filter)
     })
 }
@@ -165,7 +165,7 @@ function buildPoint(point) {
         properties: {
             ...point,
             balloonContentHeader: `<div>${point['Name']}</div>`,
-            balloonContentBody: `<div>${point['Category']}</div><div>${point['Address']}</div>`,
+            balloonContentBody: `<div>${point['Category']}</div><div>${point['Address']}</div><div><a href="${point['Source link']}" target="_blank">Подробнее</a></div>`,
         },
         options: {
             iconLayout: "default#image",
