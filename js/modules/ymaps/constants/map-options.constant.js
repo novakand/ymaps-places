@@ -8,6 +8,6 @@ export const mapOptions = {
     minZoom: 4,
     maxZoom: 18,
     zoomControlSize: 'small',
-    zoomControlPosition: { right: 10, top: 500 },
+    zoomControlPosition: { right: 10, top: 400 },
     maxAnimationZoomDifference: 0,
 }

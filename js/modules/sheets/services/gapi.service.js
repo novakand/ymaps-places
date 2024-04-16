@@ -40,7 +40,6 @@ export class GapiService {
             );
     }
 
-
     async updateCell(
         sheet,
         columnIndex,

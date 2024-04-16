@@ -1,4 +1,4 @@
-export default function (listBoxItems,reducer) {
+export default function (listBoxItems, reducer) {
     const listBoxoptions =
     {
         data: {
