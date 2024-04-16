@@ -1,6 +1,7 @@
 import { GapiAPILoader } from './gapi-api-loader.js';
 import { GapiAuthService } from './gapi-auth.service.js';
 import { sheetConfig } from '../constants/sheet-config.js';
+import { headerSheets } from '../constants/name-headers-sheet.constant.js';
 
 export class GapiService {
 
@@ -158,7 +159,7 @@ export class GapiService {
             { rowIndex }
         ));
 
-        if (!rows["Coordinates"]) {
+        if (!rows[headerSheets.coordinates]) {
             return null;
         }
         return rows;

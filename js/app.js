@@ -7,13 +7,13 @@ import { default as objectManagerOptions } from './modules/ymaps/constants/map-o
 import { default as uId } from './modules/ymaps/constants/unique-number.constants.js';
 import { fitBoundsOpts } from './modules/ymaps/constants/fitbounds.constant.js';
 import { default as listBoxoptions } from './modules/ymaps/constants/list-box-options.constant.js';
+import { headerSheets } from './modules/sheets/constants/name-headers-sheet.constant.js';
 
 let gapiService;
 let map;
 let mapService;
 let objectManager;
 let isVisibleFeature = true;
-var boundaries;
 
 async function onInit() {
     preloader(false);
@@ -73,8 +73,8 @@ function addFilter(data) {
 }
 
 function getFilterFunction(categories) {
-    return function (obj) {
-        var content = obj.properties['FilterCategory'];
+    return (geoObject) => {
+        var content = geoObject.properties[headerSheets.filterCategory];
         return categories[content]
     }
 }
@@ -114,7 +114,7 @@ function getSheets() {
 function setFilter(data) {
     return new Promise((resolve, reject) => {
         const filter = data?.allRows
-            .reduce((result, feature) => { return { ...result, [feature['FilterCategory']]: isVisibleFeature, } }, {});
+            .reduce((result, feature) => { return { ...result, [feature[headerSheets.filterCategory]]: isVisibleFeature } }, {});
         resolve(filter)
     })
 }
@@ -160,12 +160,12 @@ function buildPoint(point) {
         id: uId(),
         geometry: {
             type: 'Point',
-            coordinates: point['Coordinates']?.split(',')?.map(parseFloat)
+            coordinates: point[headerSheets.coordinates]?.split(',')?.map(parseFloat)
         },
         properties: {
             ...point,
-            balloonContentHeader: `<div>${point['Name']}</div>`,
-            balloonContentBody: `<div>${point['Category']}</div><div>${point['Address']}</div><div><a href="${point['Source link']}" target="_blank">Подробнее</a></div>`,
+            balloonContentHeader: `<div>${point[headerSheets.name]}</div>`,
+            balloonContentBody: `<div>${point[headerSheets.category]}</div><div>${point[headerSheets.address]}</div><div><a href="${point[headerSheets.linkSource]}" target="_blank">Подробнее</a></div>`,
         },
         options: {
             iconLayout: "default#image",
@@ -184,7 +184,7 @@ function fitBounds() {
 function isCoord(data) {
     return data?.allRows
         .map((point) => ({ ...point, sheet: data.sheet }))
-        .filter(item => item['Coordinates']);
+        .filter(item => item[headerSheets.coordinates]);
 }
 
 

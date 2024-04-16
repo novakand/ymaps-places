@@ -12,9 +12,7 @@ export class GapiAuthService {
 
     async onInit() {
         this._importLib()
-            .then(() => {
-                this._onLoadClient();
-            });
+            .then(() => this._onLoadClient());
     }
 
     async _onInitGapiClient() {

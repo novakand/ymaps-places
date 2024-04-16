@@ -18,12 +18,11 @@ export class YMapsMapService {
     }
 
     async loadModules() {
-
         new YMapsLibLoader(libConfig.calculateArea)
-            .load().then(() => {
-                new YMapsLibLoader(libConfig.polylabeler)
-                    .load()
-                    .then(() => ymaps.ready(['polylabel.create']));
+            .load()
+            .then(async () => {
+                await new YMapsLibLoader(libConfig.polylabeler).load();
+                ymaps.ready(['polylabel.create']);
             });
     }
 
