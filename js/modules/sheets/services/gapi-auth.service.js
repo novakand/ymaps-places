@@ -11,8 +11,10 @@ export class GapiAuthService {
     }
 
     async onInit() {
-        this._importLib();
-        this._onLoadClient();
+        this._importLib()
+            .then(() => {
+                this._onLoadClient();
+            });
     }
 
     async _onInitGapiClient() {
@@ -60,8 +62,7 @@ export class GapiAuthService {
     }
 
     async _importLib() {
-        await this._jsenLoader.load();
-        await this._cryptoLoader.load();
+        return Promise.all([await this._jsenLoader.load(), await this._cryptoLoader.load()]);
     }
 
     async _onLoadClient() {
